@@ -4,17 +4,20 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	db "github.com/sajitron/travel-agency/db/sqlc"
 	"github.com/sajitron/travel-agency/util"
 )
 
 type Server struct {
 	config util.Config
 	router *gin.Engine
+	store  db.Store
 }
 
-func NewServer(config util.Config) (*Server, error) {
+func NewServer(config util.Config, store db.Store) (*Server, error) {
 	server := &Server{
 		config: config,
+		store:  store,
 	}
 
 	server.setupRouter()

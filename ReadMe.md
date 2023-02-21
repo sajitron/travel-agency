@@ -5,7 +5,13 @@
 $ go mod init github.com/sajitron/travel-agency
 $ go get -u github.com/gin-gonic/gin
 $ go get github.com/spf13/viper
+$ go get github.com/rs/zerolog/log
+$ go get github.com/golang-migrate/migrate/v4
+$ go get github.com/golang-migrate/migrate/v4/database/postgres
 ```
+After downloading a package, it isn't moved directly into the used packages file.
+Once the library has been utilised in the codebase, run `go mod tidy` to move the package.
+
 ***
 ### DB Migration
 - Draw DB schema in [dbdiagram](https://dbdiagram.io)
