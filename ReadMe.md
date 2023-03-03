@@ -4,7 +4,7 @@
 ```bash
 # initialise app
 $ go mod init github.com/sajitron/travel-agency
-# Gin
+# gin
 $ go get -u github.com/gin-gonic/gin
 # environment variables
 $ go get github.com/spf13/viper
@@ -21,6 +21,8 @@ $ go get github.com/o1egl/paseto
 $ go get github.com/google/uuid
 # testing
 $ go get github.com/stretchr/testify/require
+# password hashing
+$ go get golang.org/x/crypto/bcrypt
 ```
 After downloading a package, it isn't moved directly into the used packages file.
 Once the library has been utilised in the codebase, run `go mod tidy` to move the package.
