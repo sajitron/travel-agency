@@ -2,12 +2,25 @@
 
 ### Commands
 ```bash
+# initialise app
 $ go mod init github.com/sajitron/travel-agency
+# Gin
 $ go get -u github.com/gin-gonic/gin
+# environment variables
 $ go get github.com/spf13/viper
+# logging
 $ go get github.com/rs/zerolog/log
+# database migration
 $ go get github.com/golang-migrate/migrate/v4
 $ go get github.com/golang-migrate/migrate/v4/database/postgres
+# jwt token
+$ go get github.com/dgrijalva/jwt-go
+# paseto
+$ go get github.com/o1egl/paseto
+# uuid generator
+$ go get github.com/google/uuid
+# testing
+$ go get github.com/stretchr/testify/require
 ```
 After downloading a package, it isn't moved directly into the used packages file.
 Once the library has been utilised in the codebase, run `go mod tidy` to move the package.
@@ -33,3 +46,4 @@ Once the library has been utilised in the codebase, run `go mod tidy` to move th
 - Populate the contents of the query file
 - Run `make sqlc`
 - Files should have been generated in the `/sqlc` directory
+
