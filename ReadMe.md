@@ -33,6 +33,7 @@ Once the library has been utilised in the codebase, run `go mod tidy` to move th
 - Export to Postgres
 - Run `migrate create -ext sql -dir db/migration -seq <migration_name>` e.g. `migrate create -ext sql -dir db/migration -seq add_users`
 - Two new files should have been generated
+- **Alternatively, we could also type in the migration command in the migration file**
 - Copy the contents of the exported sql file into the *up* generated file
 - Update the *down* file with the drop table command(s)
 - Run `make migrateup` (check the Makefile for the actual command)
