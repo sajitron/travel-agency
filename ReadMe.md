@@ -39,6 +39,19 @@ Once the library has been utilised in the codebase, run `go mod tidy` to move th
 - Run `make migrateup` (check the Makefile for the actual command)
 - Check the database GUI for confirmation
 
+### DB Migration (Alternative) & Updating a table
+- Create a `docs` directory, and create a new file - `db.dbml` within it
+- Input the contents of the db schema in the file. Same format we input in dbdiagram
+- Run `make dbschema`
+  - This should generate or update a `schema.sql` file
+- Create the query file in the `/query` directory, and input the sql commands
+- Run `make new_migration` e.g. `make new_migration name=add_some_table`
+  - This should generate the migration files
+- Enter the appropriate commands into the migration files
+- Run `make migrateup`
+- Run `make sqlc`
+- Run `make mock`
+
 ***
 
 ### Generate CRUD file with sqlc
