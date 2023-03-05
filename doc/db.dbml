@@ -1,0 +1,28 @@
+Project travel_agency {
+  database_type: 'PostgreSQL'
+  Note: '''
+    # Travel Agency Database
+  '''
+}
+
+Table users as U {
+  id bigserial [pk] // auto-increment
+  first_name varchar [not null]
+  last_name varchar [not null]
+  email varchar [unique, not null]
+  password varchar [not null]
+  password_changed_at timestamptz [not null, default: '0001-01-01 00:00:00Z']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: '0001-01-01 00:00:00Z']
+}
+
+Table sessions {
+  id uuid [pk]
+  email varchar [ref: > U.email, not null]
+  refresh_token varchar [not null]
+  user_agent varchar [not null]
+  client_ip varchar [not null]
+  is_blocked boolean [not null, default: false]
+  expires_at timestamptz [not null]
+  created_at timestamptz [not null, default: `now()`]
+}
