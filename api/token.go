@@ -47,7 +47,7 @@ func (server *Server) renewAccessToken(ctx *gin.Context) {
 		return
 	}
 
-	if session.Email != refreshPayload.Email {
+	if session.UserID != refreshPayload.UserId {
 		err := fmt.Errorf("alien session user")
 		ctx.JSON(http.StatusUnauthorized, errorResponse(err))
 		return
@@ -66,7 +66,7 @@ func (server *Server) renewAccessToken(ctx *gin.Context) {
 	}
 
 	accessToken, accessPayload, err := server.tokenMaker.CreateToken(
-		refreshPayload.Email,
+		refreshPayload.UserId,
 		server.config.AccessTokenDuration,
 	)
 

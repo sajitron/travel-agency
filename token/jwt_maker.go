@@ -25,8 +25,8 @@ func NewJWTMaker(secretKey string) (Maker, error) {
 // CreateToken creates a new token for a specific email
 // We need to implement CreateToken and VerifyToken for JWTMaker since
 // NewJWTMaker returns a Maker type
-func (maker *JWTMaker) CreateToken(email string, duration time.Duration) (string, *Payload, error) {
-	payload, err := NewPayload(email, duration)
+func (maker *JWTMaker) CreateToken(userId int64, duration time.Duration) (string, *Payload, error) {
+	payload, err := NewPayload(userId, duration)
 	if err != nil {
 		return "", payload, err
 	}
