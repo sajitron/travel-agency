@@ -18,7 +18,7 @@ Table users as U {
 
 Table sessions {
   id uuid [pk]
-  email varchar [ref: > U.email, not null]
+  user_id bigserial [ref: > U.id, not null]
   refresh_token varchar [not null]
   user_agent varchar [not null]
   client_ip varchar [not null]
