@@ -27,6 +27,9 @@ migratedown:
 migratedown1:
 	migrate -path db/migration -database "$(DB_URL)" -verbose down 1
 
+new_migration:
+	migrate create -ext sql -dir db/migration -seq $(name)
+
 dbdocs:
 	dbdocs build doc/db.dbml
 
@@ -51,4 +54,4 @@ runcontainer:
 server:
 	go run main.go
 
-.PHONY: server
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc test server startpg stoppg migrateup1 migratedown1 new_migration buildimage runcontainer dbschema mock

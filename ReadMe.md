@@ -23,6 +23,8 @@ $ go get github.com/google/uuid
 $ go get github.com/stretchr/testify/require
 # password hashing
 $ go get golang.org/x/crypto/bcrypt
+## databasing mocking
+$ go get github.com/golang/mock/mockgen@v1.6.0
 ```
 After downloading a package, it isn't moved directly into the used packages file.
 Once the library has been utilised in the codebase, run `go mod tidy` to move the package.
@@ -41,7 +43,7 @@ Once the library has been utilised in the codebase, run `go mod tidy` to move th
 
 ### DB Migration (Alternative) & Updating a table
 - Create a `docs` directory, and create a new file - `db.dbml` within it
-- Input the contents of the db schema in the file. Same format we input in dbdiagram
+- Input the contents of the db schema in the file. Same format we input in dbdiagram.io
 - Run `make dbschema`
   - This should generate or update a `schema.sql` file
 - Create the query file in the `/query` directory, and input the sql commands
@@ -62,4 +64,9 @@ Once the library has been utilised in the codebase, run `go mod tidy` to move th
 - Populate the contents of the query file
 - Run `make sqlc`
 - Files should have been generated in the `/sqlc` directory
+
+***
+### Mocking for Database
+- Run `go get github.com/golang/mock/mockgen@v1.6.0`
+- Run `make mock`
 
