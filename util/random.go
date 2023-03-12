@@ -31,13 +31,8 @@ func RandomString(n int) string {
 	return sb.String()
 }
 
-// RandomFirstName generates a random first name
-func RandomFirstName() string {
-	return RandomString(6)
-}
-
-// RandomLastName generates a random last name
-func RandomLastName() string {
+// RandomName generates a random name
+func RandomName() string {
 	return RandomString(6)
 }
 
