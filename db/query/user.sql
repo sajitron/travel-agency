@@ -21,6 +21,7 @@ UPDATE users
 SET
   password = COALESCE(sqlc.narg(password), password),
   password_changed_at = COALESCE(sqlc.narg(password_changed_at), password_changed_at),
+  updated_at = now(),
   first_name = COALESCE(sqlc.narg(first_name), first_name),
   last_name = COALESCE(sqlc.narg(last_name), last_name),
   email = COALESCE(sqlc.narg(email), email)

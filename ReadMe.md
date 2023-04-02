@@ -25,6 +25,8 @@ $ go get github.com/stretchr/testify/require
 $ go get golang.org/x/crypto/bcrypt
 ## databasing mocking
 $ go get github.com/golang/mock/mockgen@v1.6.0
+## db mocking
+$ go get github.com/lib/pq
 ```
 After downloading a package, it isn't moved directly into the used packages file.
 Once the library has been utilised in the codebase, run `go mod tidy` to move the package.

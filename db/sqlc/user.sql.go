@@ -96,6 +96,7 @@ UPDATE users
 SET
   password = COALESCE($1, password),
   password_changed_at = COALESCE($2, password_changed_at),
+  updated_at = now(),
   first_name = COALESCE($3, first_name),
   last_name = COALESCE($4, last_name),
   email = COALESCE($5, email)

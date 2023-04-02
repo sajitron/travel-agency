@@ -26,6 +26,7 @@ type userResponse struct {
 	Email             string    `json:"email"`
 	PasswordChangedAt time.Time `json:"password_changed_at"`
 	CreatedAt         time.Time `json:"created_at"`
+	UpdatedAt         time.Time `json:"updated_at"`
 }
 
 // newUserResponse returns only specific fields from a newly created or logged in user
@@ -36,6 +37,7 @@ func newUserResponse(user db.Users) userResponse {
 		Email:             user.Email,
 		PasswordChangedAt: user.PasswordChangedAt,
 		CreatedAt:         user.CreatedAt,
+		UpdatedAt:         user.UpdatedAt,
 	}
 }
 
@@ -157,7 +159,7 @@ func (server *Server) loginUser(ctx *gin.Context) {
 type updateUserRequest struct {
 	FirstName string `json:"first_name,omitempty"`
 	LastName  string `json:"last_name,omitempty"`
-	Email     string `json:"email,omitempty" binding:"min=8"`
+	Email     string `json:"email" binding:"omitempty,min=8"`
 	Password  string `json:"password,omitempty"`
 }
 
@@ -188,15 +190,15 @@ func (server *Server) updateUser(ctx *gin.Context) {
 	arg := db.UpdateUserParams{
 		FirstName: sql.NullString{
 			String: req.FirstName,
-			Valid:  true,
+			Valid:  req.FirstName != "",
 		},
 		LastName: sql.NullString{
 			String: req.LastName,
-			Valid:  true,
+			Valid:  req.LastName != "",
 		},
 		Email: sql.NullString{
 			String: req.Email,
-			Valid:  true,
+			Valid:  req.Email != "",
 		},
 		ID: urlParam.ID,
 	}
@@ -218,6 +220,7 @@ func (server *Server) updateUser(ctx *gin.Context) {
 			Valid: true,
 		}
 	}
+
 	user, err := server.store.UpdateUser(ctx, arg)
 	if err != nil {
 		if err == sql.ErrNoRows {
