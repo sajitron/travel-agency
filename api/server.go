@@ -37,7 +37,7 @@ func NewServer(config util.Config, store db.Store) (*Server, error) {
 func (server *Server) setupRouter() {
 	router := gin.Default()
 
-	baseRoute := router.Group("/api/")
+	baseRoute := router.Group("/api/v1/")
 
 	baseRoute.GET("/health", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, "up and running")
