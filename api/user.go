@@ -109,6 +109,13 @@ func (server *Server) loginUser(ctx *gin.Context) {
 	user, err := server.store.GetUser(ctx, req.Email)
 	if err != nil {
 		if err == sql.ErrNoRows {
+			clientIP := ctx.ClientIP()
+			redisErr := rateLimit(clientIP, redisClient)
+			if redisErr != nil {
+				ctx.JSON(http.StatusUnauthorized, errorResponse(redisErr))
+				return
+			}
+
 			ctx.JSON(http.StatusNotFound, errorResponse(err))
 			return
 		}
