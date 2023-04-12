@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/redis/go-redis/v9"
 	db "github.com/sajitron/travel-agency/db/sqlc"
 	"github.com/sajitron/travel-agency/token"
 	"github.com/sajitron/travel-agency/util"
@@ -34,7 +35,16 @@ func NewServer(config util.Config, store db.Store) (*Server, error) {
 	return server, nil
 }
 
+func GetRedisConnection(server *Server) *redis.Client {
+	return redis.NewClient(&redis.Options{
+		Addr:     server.config.RedisAddress,
+		Password: "",
+		DB:       0,
+	})
+}
+
 func (server *Server) setupRouter() {
+
 	router := gin.Default()
 
 	baseRoute := router.Group("/api/v1/")

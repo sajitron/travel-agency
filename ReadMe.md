@@ -27,6 +27,8 @@ $ go get golang.org/x/crypto/bcrypt
 $ go get github.com/golang/mock/mockgen@v1.6.0
 ## db mocking
 $ go get github.com/lib/pq
+# caching with redis
+$ go get github.com/redis/go-redis/v9
 ```
 After downloading a package, it isn't moved directly into the used packages file.
 Once the library has been utilised in the codebase, run `go mod tidy` to move the package.
@@ -71,4 +73,18 @@ Once the library has been utilised in the codebase, run `go mod tidy` to move th
 ### Mocking for Database
 - Run `go get github.com/golang/mock/mockgen@v1.6.0`
 - Run `make mock`
+
+***
+
+### Rate Limiting
+- Rate limiting was implemented for specific endpoints
+- The [leaky bucket algorithm](https://en.wikipedia.org/wiki/Leaky_bucket) was used albeit in a different sense.
+  - The idea is to have a bucket(list) where we have a maximum number of items.
+  - Each item in the bucket is a struct (object) that contains the expiry date of the item.
+  - Since Redis can only store one key to one value, any time a rate limited endpoint is called, we have to filter out expired caches.
+  - We still utilise the Redis expiry by always setting the expiry date of the list to the date the latest item added to list. That way, we can be sure that the list will always expire.
+  - This means that if the first item is addded at 15:00 and the last item is added at 16:00, with each item having a lifetime of 15 minutes, the following are the possible scenarios:
+    - If the endpoint is called again at 15:16, the first item will be deleted, and if all conditions are met, a new item will be added to the cache.
+    - If the endpoint isn't called by 16:16, the whole list will be deleted.
+- **NOTE**: The `go-redis` package has an in-built rate-limiter, shown [here](https://redis.uptrace.dev/guide/go-redis-rate-limiting.html)
 

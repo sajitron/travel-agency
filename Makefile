@@ -51,7 +51,10 @@ buildimage:
 runcontainer:
 	docker run --name travel-agency -p 2300:2300 -e GIN_MODE=release -e DB_SOURCE="postgresql://root:secret@postgres12:5432/travel_agency?sslmode=disable" travel-agency:latest
 
+redis:
+	docker run --name travel-redis -p 6379:6379 -d redis:7-alpine
+
 server:
 	go run main.go
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc test server startpg stoppg migrateup1 migratedown1 new_migration buildimage runcontainer dbschema mock
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc test server startpg stoppg migrateup1 migratedown1 new_migration buildimage runcontainer dbschema mock redis

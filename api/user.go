@@ -1,7 +1,9 @@
 package api
 
 import (
+	"context"
 	"database/sql"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -96,6 +98,8 @@ type loginUserResponse struct {
 
 // loginUser handles a user's login request
 func (server *Server) loginUser(ctx *gin.Context) {
+	redisClient := GetRedisConnection(server)
+
 	var req loginUserRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
@@ -114,6 +118,11 @@ func (server *Server) loginUser(ctx *gin.Context) {
 
 	err = util.ValidatePassword(req.Password, user.Password)
 	if err != nil {
+		redisErr := rateLimit(req.Email, redisClient)
+		if redisErr != nil {
+			ctx.JSON(http.StatusUnauthorized, errorResponse(redisErr))
+			return
+		}
 		ctx.JSON(http.StatusUnauthorized, errorResponse(err))
 		return
 	}
@@ -144,6 +153,9 @@ func (server *Server) loginUser(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
+
+	// delete failed access cache on successful login
+	redisClient.Del(context.Background(), fmt.Sprintf("%s-login", req.Email))
 
 	res := loginUserResponse{
 		SessionID:             session.ID,
