@@ -88,3 +88,11 @@ Once the library has been utilised in the codebase, run `go mod tidy` to move th
     - If the endpoint isn't called by 16:16, the whole list will be deleted.
 - **NOTE**: The `go-redis` package has an in-built rate-limiter, shown [here](https://redis.uptrace.dev/guide/go-redis-rate-limiting.html)
 
+
+### Update go version
+- Visit the go [website](https://go.dev) to download the latest version
+- After installation, update the go version in the _go.mod_ and the _test.yml_ files
+- Update the base image in the _Dockerfile_
+- Run `go mod tidy` to update the packages
+- Run all tests
+- Run`docker-compose up` to confirm the new image works with docker

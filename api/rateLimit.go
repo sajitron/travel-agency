@@ -94,3 +94,5 @@ func rateLimit(identity string, redisClient *redis.Client) error {
 	fmt.Printf("Failed access logged for %s", identity)
 	return nil
 }
+
+// TODO: add tests
