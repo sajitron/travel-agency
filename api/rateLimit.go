@@ -22,6 +22,7 @@ type FailedAccess struct {
 	ExpiryTime time.Time
 }
 
+// rateLimit checks if the identity has failed to login more than a specific number of times in the last hour
 func rateLimit(identity string, redisClient *redis.Client) error {
 	loginIdentity := fmt.Sprintf("%s-login", identity)
 	// check if store exists
